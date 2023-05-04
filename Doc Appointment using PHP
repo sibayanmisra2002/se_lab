@@ -1,0 +1,65 @@
+Code for an online doctor appointment registration form using PHP and MySQL:
+
+HTML Form:
+
+```
+<form method="post" action="register.php">
+    <label for="name">Name:</label>
+    <input type="text" name="name" id="name" required><br>
+
+    <label for="email">Email:</label>
+    <input type="email" name="email" id="email" required><br>
+
+    <label for="phone">Phone:</label>
+    <input type="text" name="phone" id="phone" required><br>
+
+    <label for="doctor">Doctor:</label>
+    <select name="doctor" id="doctor" required>
+        <option value="">Select Doctor</option>
+        <option value="Dr. Smith">Dr. Smith</option>
+        <option value="Dr. Johnson">Dr. Johnson</option>
+        <option value="Dr. Williams">Dr. Williams</option>
+    </select><br>
+
+    <label for="date">Date:</label>
+    <input type="date" name="date" id="date" required><br>
+
+    <input type="submit" name="submit" value="Register">
+</form>
+```
+
+PHP Code (register.php):
+
+```
+<?php
+// Connect to the database
+$host = "localhost";
+$user = "username";
+$password = "password";
+$database = "database_name";
+$conn = mysqli_connect($host, $user, $password, $database);
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+// Get form data
+$name = $_POST['name'];
+$email = $_POST['email'];
+$phone = $_POST['phone'];
+$doctor = $_POST['doctor'];
+$date = $_POST['date'];
+
+// Insert data into database
+$sql = "INSERT INTO appointments (name, email, phone, doctor, date) VALUES ('$name', '$email', '$phone', '$doctor', '$date')";
+if (mysqli_query($conn, $sql)) {
+    echo "Appointment registered successfully.";
+} else {
+    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+}
+
+// Close database connection
+mysqli_close($conn);
+?>
+```
+
+Note: Please replace the database credentials in the PHP code with your own database credentials. Also, make sure to create a database table named 'appointments' with columns named 'name', 'email', 'phone', 'doctor', and 'date'.
